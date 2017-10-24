@@ -78,15 +78,9 @@
     </nav>
 
     <!-- Content Block -->
-    <div class="container content">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8 centered">
-                <div class="blog_posts">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
+    <div class="container content text-center">
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
 </html>
