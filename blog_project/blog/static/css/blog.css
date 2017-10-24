@@ -1,0 +1,39 @@
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 20px;
+}
+
+
+.techfont {
+    font-family: Roboto, sans-serif;
+    font-size: 1.3em;
+}
+
+.centerstage {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.postdate {
+    text-align: center;
+}
+
+.posttitle {
+    font-family: Roboto, sans-serif;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.postauthor {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.postcontent > p {
+    font-size: 1em;
+}
+
+.btn-comment {
+    position: absolute;
+    right: 0px;
+}

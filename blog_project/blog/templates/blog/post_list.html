@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row align-items-end">
+            {% for post in post_list %}
+                <div class="col-lg-6">
+                    <h1>
+                        <a class="text-dark" href="{% url 'post_detail' pk=post.pk %}">
+                            {{ post.title }}
+                        </a>
+                    </h1>
+                    <p>Published at {{ post.published_date|date:"m/d/Y H:m:s" }} by
+                        <span class="text-primary font-weight-bold">
+                            {{ post.author }}
+                        </span>
+                    </p>
+                    <p>Comments:&nbsp;
+                        <span class="badge badge-primary badge-pill">
+                            {{ post.approved_comments.count }}
+                        </span>
+                    </p>
+                    <div>
+                        <a class="btn btn-secondary" href="{% url 'post_detail' pk=post.pk %}" role="button">
+                            View details &raquo;
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div> <!-- /container -->
+
+{% endblock %}

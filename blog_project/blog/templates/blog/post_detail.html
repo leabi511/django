@@ -1,0 +1,68 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="row justify-content-md-center">
+        <div class="col-md">
+            <h1 class="posttitle text-dark">{{ post.title }}</h1>
+            <h3 class="postauthor">Posted by
+                <span class="text-primary">
+                    <strong>{{ post.author }}</strong>
+                </span>
+            </h3>
+            {% if post.published_date %}
+                <div class="date postdate">
+                    {{ post.published_date|date:"m/d/Y H:m:s" }}
+                </div>
+            {% else %}
+                <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+            {% endif %}
+
+
+            <div class="postcontent">
+                <p class="text-justify">
+                    {{ post.text }}
+                </p>
+            </div>
+
+            {% if user.is_authenticated and user.pk == post.author.pk %}
+                <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">
+                    Edit&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}">
+                    Delete&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                </a>
+            {% endif %}
+
+            <hr>
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-comment" href="{% url 'add_comment_post' pk=post.pk %}">
+                    Add Comment
+                </a>
+            {% endif %}
+
+            <div class="container">
+                {% for comment in post.comments.all %}
+                    <br>
+                    {% if user.is_authenticated or comment.approved %}
+                        Commented at {{ comment.created_date|date:"H:m:s m/d/Y" }}
+                        by <span class="text-primary">{{ comment.author }}</span>
+
+                        <p>{{ comment.text|safe|linebreaks }}</p>
+
+                        {%  if post.author.pk == user.pk and not comment.approved %}
+                            <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
+                                Approve <span class="glyphicon glyphicon-ok"></span>
+                            </a>
+                            <a class="btn btn-danger" href="{% url 'comment_remove' pk=comment.pk %}">
+                                Remove <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% empty %}
+                        <p>No Comments</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

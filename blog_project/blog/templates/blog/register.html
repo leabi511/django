@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        {% if registered %}
+                <p>You have registered successfully! Please sign in.
+        {% else %}
+            <h2>Sign Up</h2>
+            {% for error in user_form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in user_form %}
+                    <fieldset class="control-group">
+                        <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                        <div class="controls">
+                            {{ field }}
+                            <p class="help-text">{{ field.help_text }} </p>
+                        </div>
+                    </fieldset>
+                {% endfor %}
+                <input class="btn btn-primary" type="submit" value="Sign Up">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" href="{% url 'post_list' %}">
+            Blogs
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#userinfo" aria-controls="userinfo"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="{% url 'post_list' %}">
+                    Home <span class="sr-only">(current)</span>
+                </a>
+                <a class="nav-item nav-link" href="{% url 'about' %}">
+                    About
+                </a>
+                <a class="nav-item nav-link" href="https://www.github.com">
+                    Github
+                </a>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end">
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link active" href="#">
+                        Welcome <span>{{ user.username }}</span>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                    <a class="nav-item nav-link" href="{% url 'post_new' %}">
+                        New Post
+                    </a>
+                    <a class="nav-item nav-link" href="{% url 'post_draft_list' %}">
+                        Drafts
+                    </a>
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'logout' %}" method="get">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'login' %}" method="get">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            Sign In
+                        </button>
+                    </form>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'register' %}" method="get">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+                            Sign Up
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Block -->
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 centered">
+                <div class="blog_posts">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
